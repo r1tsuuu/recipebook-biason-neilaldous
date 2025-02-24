@@ -1,16 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>{{ name }}</title>
-    </head>
-        <body>
-            <h1>Recipe Book</h1>
-            <h2>{{ name }}</h2>
-            <ul>
-                {% for ingredient in ingredients %}
-                <li>{{ ingredient.quantity }} {{ ingredient.name }}</li>
-                {% endfor %}
-            </ul>
-            <a href="{{ link }}"> Go back</a>
-        </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ name }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 500px;
+            background: white;
+            padding: 20px;
+            margin: 50px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+        }
+        h2 {
+            color: #555;
+            font-size: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #eee;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 15px;
+            background: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Recipe Book</h1>
+        <h2>{{ name }}</h2>
+        <ul>
+            {% for task in ingredients%}
+                <li>{{task.name}}: {{task.quantity}}</li>
+            {% endfor %}
+        <ul>
+        <a href="{{ link }}">Go back</a>
+    </div>
+</body>
 </html>
