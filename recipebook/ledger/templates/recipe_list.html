@@ -1,58 +1,14 @@
-<!DOCTYPE html>
-<html lang="en-US">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe Book</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f8f8;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 400px;
-            background: white;
-            padding: 20px;
-            margin: 50px auto;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #333;
-            font-size: 24px;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        li {
-            background: #eee;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        a {
-            text-decoration: none;
-            color: #007BFF;
-            font-weight: bold;
-        }
-        a:hover {
-            color: #0056b3;
-        }
-    </style>
-</head>
+{% extends 'main.html' %}
 
-<body>
-    <div class="container">
-        <h1>Recipe Book</h1>
-        <ul>
-            {% for task in recipes %}
-                <li><a href="{{ task.link }}">{{ task.name }}</a></li>
-            {% endfor %}
-        </ul>
-    </div>
-</body>
-</html>
+{% block content %}
+    <h1>Recipe Book</h1>
+    <ul>
+    {% for recipe in recipes %}
+        <li style="background: none;">
+            <a href="{{ recipe.link }}">
+                {{ recipe.name }}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock content %}
