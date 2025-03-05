@@ -1,44 +1,28 @@
 from django.shortcuts import render
-from .models import Recipe, RecipeIngredient
+from django.http import HttpResponse
+from django.views.generic import ListView, DetailView
+from .models import Recipe
+
+class RecipeListView(ListView):
+   
+    model = Recipe
+    template_name = 'recipe_list.html'
+
+
+class RecipeDetailView(DetailView):
+   
+    model = Recipe
+    template_name = "recipe_detail.html"
+
 
 def recipe_list(request):
+
     recipes = Recipe.objects.all()
-    
-    recipe_data = [
-        {
-            "name": recipe.name,
-            "link": f"/recipe/{recipe.id}",
-            "title": "Recipe Book"
-        }
-        for recipe in recipes
-    ]
+    ctx = {'recipes' : recipes}
+    return render(request, 'recipe_list.html', ctx)
 
-    ctx = {"recipes": recipe_data}
-    return render(request, "recipe_list.html", ctx)
 
-def recipe_1(request):
-    recipe = Recipe.objects.get(name="Recipe 1") 
-    ingredients = RecipeIngredient.objects.filter(recipe=recipe)
-
-    ctx = {
-        "recipe": recipe,
-        "ingredients": ingredients,
-        "link": "/recipes/list",
-        "title": recipe.name
-    }
-
-    return render(request, "recipe.html", ctx)
-
-def recipe_2(request):
-
-    recipe = Recipe.objects.get(name="Recipe 2") 
-    ingredients = RecipeIngredient.objects.filter(recipe=recipe)
-
-    ctx = {
-        "recipe": recipe,
-        "ingredients": ingredients,
-        "link": "/recipes/list",
-        "title": recipe.name
-    }
-
-    return render(request, "recipe.html", ctx)
+def recipe_detail(request,pk):
+   
+    ctx = {'recipe' : Recipe.objects.get(pk=pk)}
+    return render(request,'recipe_detail.html', ctx)

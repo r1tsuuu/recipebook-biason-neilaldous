@@ -5,18 +5,21 @@ class RecipeIngredientInline(admin.TabularInline):
     model = RecipeIngredient
 
 class IngredientAdmin(admin.ModelAdmin):
-    model = Ingredient
     list_display = ('name',)
+    search_fields = ('name',)
+    list_display_links = ('name',)
 
 class RecipeAdmin(admin.ModelAdmin):
-    model = Recipe
     list_display = ('name',)
+    search_fields = ('name',)
+    list_display_links = ('name',)
     inlines = [RecipeIngredientInline] 
 
 class RecipeIngredientAdmin(admin.ModelAdmin):
-    model = RecipeIngredient
     list_display = ('get_ingredient_name', 'quantity', 'get_recipe_name')
     list_filter = ('recipe',)
+    search_fields = ('ingredient__name', 'recipe__name')
+    list_display_links = ('get_ingredient_name', 'get_recipe_name')
 
     @admin.display(description="Ingredient Name")
     def get_ingredient_name(self, obj):
