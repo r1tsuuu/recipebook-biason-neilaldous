@@ -1,2 +1,4 @@
 recipebook/Pipfile
 recipebook/Pipfile.lock
+recipebook/recipebook/__pycache__
+recipebook/ledger/migrations/__pycache__
