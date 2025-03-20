@@ -1,22 +1,30 @@
 from django.contrib import admin
-from .models import Ingredient, Recipe, RecipeIngredient, Profile
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
+from .models import Ingredient, Recipe, RecipeIngredient, Profile
+
+
+class ProfileInline(admin.StackedInline):
+    model = Profile
+    can_delete = False
 
 
 class RecipeIngredientInline(admin.TabularInline):
     model = RecipeIngredient
+
 
 class IngredientAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
     list_display_links = ('name',)
 
+
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
     list_display_links = ('name',)
-    inlines = [RecipeIngredientInline] 
+    inlines = [RecipeIngredientInline]
+
 
 class RecipeIngredientAdmin(admin.ModelAdmin):
     list_display = ('get_ingredient_name', 'quantity', 'get_recipe_name')
@@ -31,16 +39,18 @@ class RecipeIngredientAdmin(admin.ModelAdmin):
     @admin.display(description="Recipe")
     def get_recipe_name(self, obj):
         return obj.recipe.name
+
+
+class CustomUserAdmin(BaseUserAdmin):
+    inlines = (ProfileInline,)
     
-class ProfileInline(admin.StackedInline):
-    model = Profile
-    can_delete = False
+    def __str__(self):
+        return self.username
 
-class UserAdmin(admin.BaseUserAdmin):
-    inlines = [ProfileInline,]
 
+
+admin.site.unregister(User)
 admin.site.register(Ingredient, IngredientAdmin)
 admin.site.register(Recipe, RecipeAdmin)
 admin.site.register(RecipeIngredient, RecipeIngredientAdmin)
-admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
+admin.site.register(User, CustomUserAdmin)

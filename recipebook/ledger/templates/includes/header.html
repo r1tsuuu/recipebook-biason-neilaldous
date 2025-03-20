@@ -1,0 +1,13 @@
+<header>
+    <h2>Recipe Book</h2>
+    <div class="auth-buttons">
+        {% if user.is_authenticated %}
+            <form method="POST" action="{% url 'ledger:logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn logout-btn">Logout</button>
+            </form>
+        {% else %}
+            <a href="{% url 'ledger:login' %}" class="btn login-btn">Login</a>
+        {% endif %}
+    </div>
+</header>

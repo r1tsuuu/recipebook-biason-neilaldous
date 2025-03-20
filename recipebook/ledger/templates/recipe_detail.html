@@ -1,15 +1,19 @@
 {% extends 'main.html' %}
 
+{% block heading %}{{ recipe.name }}{% endblock %}
+
 {% block content %}
-<h1>
-    {{ recipe.name }}
-    {{ recipe.author }}
-</h1>
-<ul>
-    {% for ingredient in recipe.ingredients.all %}
-    <li>
-        {{ ingredient.ingredient.name }} - {{ ingredient.quantity }}
-    </li>
-    {% endfor %}
-</ul>
-{% endblock content%}
+<div class="recipe-detail">
+    <p><strong>Author:</strong> {{ recipe.author.name }}</p>
+    <ul class="ingredient-list">
+        {% for ingredient in recipe.ingredients.all %}
+            <li>{{ ingredient.ingredient.name }} – {{ ingredient.quantity }}</li>
+        {% endfor %}
+    </ul>
+    <p>
+        <em>Created On:</em> {{ recipe.created_on|date:"F j, Y" }}<br>
+        <em>Last Updated:</em> {{ recipe.updated_on|date:"F j, Y" }}
+    </p>
+    <a href="{% url 'ledger:recipe_list' %}" class="btn back-btn">Back to Recipes</a>
+</div>
+{% endblock %}
