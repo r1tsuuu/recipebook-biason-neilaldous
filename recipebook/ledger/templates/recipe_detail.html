@@ -6,11 +6,23 @@
 <div class="recipe-detail">
     <p><strong>Author:</strong> {{ recipe.author.name }}</p>
     
+    <h2>Ingredients</h2>
     <ul class="ingredient-list">
         {% for ingredient in recipe.ingredients.all %}
             <li>{{ ingredient.ingredient.name }} – {{ ingredient.quantity }}</li>
+        {% empty %}
+            <li>No ingredients.</li>
         {% endfor %}
     </ul>
+
+    <h2>Images</h2>
+    {% if recipe.images.all %}
+        {% for image in recipe.images.all %}
+            <img src="{{ image.image.url }}" alt="{{ image.description }}">
+        {% endfor %}
+    {% else %}
+        <p>No images.</p>
+    {% endif %}
 
     <!-- This was automatically formatted by Django, I merely modified it to show the time as well. -->
     
