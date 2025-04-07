@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+
+{% block title %}Recipe Image Upload{% endblock %}
+
+{% block content %}
+  <div>
+    <h3>Upload Recipe Image For: {{ recipe.name }}</h3>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div>
+        {{ form.as_p }}
+      </div>
+      <button type="submit">Upload Image</button>
+    </form>
+    <a href="{% url 'ledger:recipe_detail' recipe.pk %}">Back to Recipe</a>
+  </div>
+{% endblock %}

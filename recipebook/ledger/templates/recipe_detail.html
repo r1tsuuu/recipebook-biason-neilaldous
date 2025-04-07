@@ -1,36 +1,40 @@
 {% extends 'main.html' %}
 
-{% block heading %}{{ recipe.name }}{% endblock %}
-
 {% block content %}
-<div class="recipe-detail">
-    <p><strong>Author:</strong> {{ recipe.author.name }}</p>
-    
-    <h2>Ingredients</h2>
-    <ul class="ingredient-list">
-        {% for ingredient in recipe.ingredients.all %}
-            <li>{{ ingredient.ingredient.name }} – {{ ingredient.quantity }}</li>
-        {% empty %}
-            <li>No ingredients.</li>
-        {% endfor %}
-    </ul>
+  <h2>{{ recipe.name }}</h2>
+  <p>Author: {{ recipe.author.name }}</p>
+  <p>{{ recipe.description }}</p>
 
-    <h2>Images</h2>
+  <h3>Ingredients</h3>
+  <ul>
+    {% for recipe_ingredient in recipe.ingredients.all %}
+      <li>{{ recipe_ingredient.ingredient.name }} - {{ recipe_ingredient.quantity }}</li>
+    {% empty %}
+      <p>No ingredients for this recipe yet.</p>
+    {% endfor %}
+  </ul>
+
+  <h3>Images</h3>
+  <div>
     {% if recipe.images.all %}
         {% for image in recipe.images.all %}
-            <img src="{{ image.image.url }}" alt="{{ image.description }}">
+            <div>
+            <img src="{{ image.image.url }}" alt="{{ image.description }}"/>
+            <p>{{ image.description }}</p>
+            </div>
+        {% empty %}
+            <p>No images for this recipe yet.</p>
         {% endfor %}
-    {% else %}
-        <p>No images.</p>
     {% endif %}
+  </div>
 
     <!-- This was automatically formatted by Django, I merely modified it to show the time as well. -->
-    
+
     <p>
         <em>Created On:</em> {{ recipe.created_on|date:"F j, Y g:i A" }}<br> 
         <em>Last Updated:</em> {{ recipe.updated_on|date:"F j, Y g:i A" }}
     </p>
 
-    <a href="{% url 'ledger:recipe_list' %}" class="btn back-btn">Back to Recipes</a>
-</div>
+  <a href="{% url 'ledger:recipe_add_image' recipe.pk %}">Upload Image</a>
+  <a href="{% url 'ledger:recipe_list' %}">Back to List</a>
 {% endblock %}
