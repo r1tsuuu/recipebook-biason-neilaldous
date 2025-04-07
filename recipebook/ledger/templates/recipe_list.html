@@ -3,13 +3,17 @@
 {% block heading %}Recipe List{% endblock %}
 
 {% block content %}
-<ul class="recipe-list">
-    {% for recipe in recipes %}
-        <li>
-            <a href="{{ recipe.get_absolute_url }}" class="recipe-link">
-                {{ recipe.name }}
-            </a>
-        </li>
-    {% endfor %}
-</ul>
+    <div>
+        <a href="{% url 'ledger:recipe_add' %}">Add New Recipe/Ingredient/Recipe Ingredient</a>
+    </div>
+
+    <ul>
+        {% for recipe in recipes %}
+            <li>
+                <a href="{{ recipe.get_absolute_url }}">
+                    {{ recipe.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
